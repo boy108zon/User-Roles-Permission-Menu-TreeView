@@ -1,0 +1,122 @@
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` bigint(51) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `status` enum('Enable','Disable') NOT NULL DEFAULT 'Enable',
+  `profile_photo` varchar(255) DEFAULT NULL,
+  `ip_address` varchar(21) NOT NULL,
+  `user_agent` varchar(100) NOT NULL,
+  `last_activity` datetime DEFAULT NULL,
+  `created_date` datetime NOT NULL,
+  `reset_hash` varchar(255) NOT NULL DEFAULT '0',
+  `is_deleted` int(11) NOT NULL DEFAULT '0',
+  `activation_patch` varchar(255) NOT NULL,
+  `otp` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `role_id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `role` (`role_id`, `name`) VALUES
+(1, 'admin'),
+(2, 'user'),
+(3, 'Client'),
+(4, 'accountant');
+
+--
+-- Table structure for table `user_to_role`
+--
+
+CREATE TABLE `user_to_role` (
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `permission`
+--
+
+CREATE TABLE `permission` (
+  `permission_id` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `permission` (`permission_id`, `name`) VALUES
+(1, 'ViewFromDateToDate'),
+(4, 'newUser'),
+(13, 'userProfile'),
+(14, 'userClient');
+
+--
+-- Table structure for table `role_to_permission`
+--
+
+CREATE TABLE `role_to_permission` (
+  `id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `menu_settings`
+--
+
+CREATE TABLE `menu_settings` (
+  `menu_id` int(11) NOT NULL,
+  `menu_name` varchar(255) NOT NULL,
+  `menu_title` varchar(255) NOT NULL,
+  `type` varchar(150) NOT NULL,
+  `link` varchar(255) DEFAULT '#',
+  `icons` varchar(50) NOT NULL,
+  `is_active` int(11) NOT NULL DEFAULT '1',
+  `parent` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `menu_settings`
+--
+
+INSERT INTO `menu_settings` (`menu_id`, `menu_name`, `menu_title`, `type`, `link`, `icons`, `is_active`, `parent`) VALUES
+(1, 'Dashboard', 'Dashboard', 'Menu', '/admin/dashboard/', 'fa fa-dashboard', 1, 0),
+(2, 'Users', 'Users', 'Menu', '#', 'fa fa-user', 1, 0),
+(3, 'GST API SETTINGS', 'ApiUsers', 'Menu', '#', 'fa fa-gears', 1, 0),
+(21, 'Manage User', 'users', 'SideBar', '/admin/users/', 'fa fa-user', 1, 2),
+(22, 'Manage Roles', 'Roles', 'SideBar', '/admin/users/roles/', 'fa fa-user', 1, 2),
+(23, 'Gst API User', 'ApiUsers', 'SideBar', '/admin/ApiUsers/', 'fa fa-user', 1, 3),
+(24, 'API Settings', 'api_settings', 'SideBar', '/admin/ApiUsers/api_settings/', ' fa fa-gears', 1, 3),
+(28, 'Audit', 'Audit', 'Menu', '#', 'fa fa-file', 1, 0),
+(29, 'Audit Form', 'Manage Audit  Form', 'SideBar', '/admin/Audit/auditform/', ' fa fa-file', 1, 28),
+(30, 'Qualification Details', 'Qualification Details', 'SideBar', '/admin/Audit/qualification_details', ' fa fa-file', 1, 28),
+(31, 'Code Sector Subsector', 'Code Sector Subsector', 'SideBar', '/admin/Audit/code_sector_sub_sector', ' fa fa-file', 1, 28),
+(32, 'Audit Clause', 'Audit Clause', 'SideBar', '/admin/Audit/audit_clause', ' fa fa-file', 1, 28),
+(33, 'Block Items', 'Block Items', 'SideBar', '/admin/Audit/block_items', ' fa fa-file', 1, 28),
+(34, 'Asset Category', 'Asset Category', 'SideBar', '/admin/Audit/asset_category', ' fa fa-file', 1, 28),
+(35, 'Quantitative Stock Item', 'Quantitative Stock Item', 'SideBar', '/admin/Audit/quantitative_stock_items', ' fa fa-file', 1, 28),
+(36, 'icds', 'icds', 'SideBar', '/admin/Audit/icds', ' fa fa-file', 1, 28),
+(37, 'Section Deductions', 'Section Deductions', 'SideBar', '/admin/Audit/section_deductions', ' fa fa-file', 1, 28),
+(38, 'API Certificate', 'api_certificate', 'SideBar', '/admin/ApiUsers/api_certificate/', ' fa fa-gears', 1, 3);
+
+--
+-- Table structure for table `menu_settings`
+--
+
+CREATE TABLE `role_menus` (
+  `id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `menu_id` int(11) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
